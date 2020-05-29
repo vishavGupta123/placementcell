@@ -66,10 +66,23 @@ module.exports.allInterviews = async function (req, res) {
 };
 
 module.exports.assignInterviewPage = async function (req, res) {
-  let company = await Interview.findById(req.params.id);
+  let company = await Interview.findById(req.params.id).populate("student");
+  let statusArray = [];
+  for (let i = 0; i < company.student.length; i++) {
+    let status = await Status.findOne({
+      student: company.student[i]._id,
+      interview: company._id,
+    });
+    if (status) {
+      statusArray.push(status);
+    }
+  }
+  console.log(statusArray);
+  console.log(company);
   if (company) {
     return res.render("assign_interview", {
       company: company,
+      statusArray: statusArray,
     });
   }
 };

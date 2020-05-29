@@ -1,5 +1,6 @@
 <html>
   <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
       table {
         margin: auto;
@@ -15,16 +16,21 @@
   <body>
     <h1 style="text-align: center;">Result Summary</h1>
     <table id="my-table">
-      <th>Company</th>
-      <th>Date</th>
-      <th>Student Id</th>
-      <th>Student</th>
-      <th>College</th>
-      <th>Dsa Final Scores</th>
-      <th>WebD Final Scores</th>
-      <th>React Final Scores</th>
-      <th>Batch</th>
-      <th>Result</th>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Date</th>
+          <th>Student Id</th>
+          <th>Student</th>
+          <th>College</th>
+          <th>Dsa Final Scores</th>
+          <th>WebD Final Scores</th>
+          <th>React Final Scores</th>
+          <th>Batch</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+
       <% for(status of statuses){%>
       <tr>
         <% if(status.student !==null){%>
@@ -42,15 +48,39 @@
       </tr>
       <%}%>
     </table>
-    <button id="export" onclick="exporttocsv()">Export</button>
-
-
-    <script type="text/javascript" src="jquery.min.js" />
-<script type="text/javascript" src="/jquery.tabletocsv.js" />
+    <button
+      id="export"
+      onclick="downloadCsv()"
+      style="display: block; margin: auto; width: 100px; margin-top: 10px;"
+    >
+      Export To Csv
+    </button>
 
     <script type="text/javascript">
-      function exporttocsv() {
-        $("#my-table").tableToCsv();
+      function downloadCsv() {
+        var myTableArray = [];
+        $("table#my-table tr").each(function () {
+          var arrayOfThisRow = [];
+          var tableData = $(this).find("td");
+          if (tableData.length > 0) {
+            tableData.each(function () {
+              arrayOfThisRow.push($(this).text());
+            });
+            myTableArray.push(arrayOfThisRow);
+          }
+        });
+        console.log(myTableArray);
+        var csv = myTableArray
+          .map(function (d) {
+            return d.join();
+          })
+          .join("\n");
+        console.log(csv);
+        var hiddenElement = document.createElement("a");
+        hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "data.csv";
+        hiddenElement.click();
       }
     </script>
   </body>

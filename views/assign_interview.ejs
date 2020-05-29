@@ -8,7 +8,6 @@
     <style>
       #assign-interview-form {
         width: 300px;
-        height: 700px;
         border: 1px solid black;
         margin: auto;
         display: flex;
@@ -28,6 +27,31 @@
   </head>
   <body>
     <% if(company){%>
+    <div>
+      <h2>
+        List of students who Gave <%= company.company %> exam held on <%=
+        company.date %>
+      </h2>
+      <ul>
+        <% for(let i=0;i<company.student.length;i++){%>
+        <li style="font-weight: bolder; font-size: large;">
+          <%= company.student[i].name %> 
+          <% if(statusArray[i].result === 'Pending'){%> 
+            <form action="/student/add-status/<%=statusArray[i]._id%>" method="POST">
+              <select name="result" id="result" onchange="this.form.submit()">
+                  <option disabled selected value>-- select an option--</option>
+                  <option value="Not Declared">Not Declared</option>
+                  <option value="Pass">Pass</option>
+                  <option value="Fail">Fail</option>
+              </select>
+          </form>
+            <%} else {%>
+              <%= statusArray[i].result %>  
+            <%}%>
+        </li>
+        <%}%>
+      </ul>
+    </div>
     <form
       action="/interview/assign_interview/<%= company._id %>"
       method="POST"

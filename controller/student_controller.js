@@ -4,6 +4,18 @@ const interview = require("../model/interview");
 
 module.exports.createStudent = async function (req, res) {
   try {
+    if (
+      !req.body.name ||
+      !req.body.college ||
+      !req.body.batch ||
+      !req.body.dsa ||
+      !req.body.webD ||
+      !req.body.react
+    ) {
+      req.flash("error", "Please check all the Input fields carefully");
+      return res.redirect("back");
+    }
+
     let student = await Student.create({
       name: req.body.name,
       college: req.body.college,
