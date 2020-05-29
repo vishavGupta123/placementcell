@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <style>
+      table {
+        margin: auto;
+        background-color: antiquewhite;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Result Summary</h1>
+    <table id="my-table">
+      <th>Company</th>
+      <th>Date</th>
+      <th>Student Id</th>
+      <th>Student</th>
+      <th>College</th>
+      <th>Dsa Final Scores</th>
+      <th>WebD Final Scores</th>
+      <th>React Final Scores</th>
+      <th>Batch</th>
+      <th>Result</th>
+      <% for(status of statuses){%>
+      <tr>
+        <% if(status.student !==null){%>
+        <td><%=status.interview.company%></td>
+        <td><%= status.interview.date %></td>
+        <td><%= status.student._id %></td>
+        <td><%= status.student.name %></td>
+        <td><%= status.student.college %></td>
+        <td><%= status.student.course.dsa%></td>
+        <td><%= status.student.course.webD%></td>
+        <td><%= status.student.course.react %></td>
+        <td><%= status.student.batch %></td>
+        <td><%=status.result%></td>
+        <%}%>
+      </tr>
+      <%}%>
+    </table>
+    <button id="export" onclick="exporttocsv()">Export</button>
+
+
+    <script type="text/javascript" src="jquery.min.js" />
+<script type="text/javascript" src="/jquery.tabletocsv.js" />
+
+    <script type="text/javascript">
+      function exporttocsv() {
+        $("#my-table").tableToCsv();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <style>
+      #add-interview {
+        margin: auto;
+        width: 300px;
+        box-shadow: 1px 2px black;
+        margin-top: 10px;
+        border: 1px solid black;
+        background-color: teal;
+      }
+      input {
+        box-shadow: inset 1px 1px black;
+      }
+      input[type="submit"] {
+        display: block;
+        margin: auto;
+        margin-top: 1em;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <style>
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/interview/create_interview" method="POST" id="add-interview">
+      <h3 style="text-align: center;">Add a new Interview</h3>
+      <label for="company">Company</label>
+      <input
+        type="text"
+        name="company"
+        placeholder="Company Name"
+        id="company"
+      />
+      <label for="date">Date</label>
+      <input type="date" name="date" id="date" />
+      <input type="submit" value="Submit" />
+    </form>
+    <% for(interview of interviews){%>
+    <ul>
+      <li>
+        <%= interview.company %>
+        <br />
+        <a href="/interview/assign_interview/<%=interview._id%>">
+          assign Interview of this company to student</a
+        >
+      </li>
+    </ul>
+    <%}%>
+    <script>
+      <% if(flash.success && flash.success.length>0){%>
+        new Noty({
+          theme:'relax',
+          text:'<%= flash.success %>',
+          type:'success',
+          layout:'topRight',
+          timeout:2000
+        }).show()
+        <%}%>
+    </script>
+  </body>
+</html>

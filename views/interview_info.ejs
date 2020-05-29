@@ -1,0 +1,32 @@
+<html>
+  <head> 
+      <style>
+          table{
+              margin:auto;
+          }
+          table,th,td{
+              border:1px solid black;
+          }
+      </style>
+  </head>
+  <body>
+      <h1 style="text-align: center;">Company Information With Students That Give its Interview</h1>
+    <table>
+      <th>Company</th>
+      <th>Student Name</th>
+      <th>College</th>
+    <% for(interview of interviews){%>
+        
+            <% for(let i=0;i<interview.student.length;i++){%>
+                <tr>
+                <td><%= interview.company %></td>
+                <td><%= interview.student[i].name%></td>
+                <td><%= interview.student[i].college%></td>
+            </tr>
+            <%}%>
+        
+        <%}%>
+    </table>
+
+  </body>
+</html>

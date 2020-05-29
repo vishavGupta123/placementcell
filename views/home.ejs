@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <style>
+      label {
+        display: block;
+      }
+      #student-form{
+        border:1px solid aquamarine;
+        text-align: center;
+      }
+    #student-form > div{
+      width:300px;
+      background-color: blanchedalmond;
+      margin:auto;
+      margin-top: 10px;
+    }
+    input[type="submit"]{
+      display:block;
+      margin:auto;
+      margin-top: 10px;
+    }
+    nav > a{
+      text-decoration: none;
+      color:black;
+      font-size: x-large;
+      font-weight: bolder;
+    }
+    </style>
+  </head>
+  <body>
+    <% if(!locals.user){%>
+      <nav style="background-color: aqua;height:100px;display:flex;justify-content: space-between;">
+        <h1>Career Camp Website</h1>
+        <div >
+          <a href="/users/sign-in">Sign In</a>
+          <a href="/users/sign-up">Sign Up</a>
+        </div>
+       
+      </nav> 
+      <%}else {%> 
+        <h3 style="text-align: center;">Hello <%= user.username %></h3>
+        <nav style="background-color: aqua; display:flex;justify-content: space-around;height:60px;border: 1px solid black;">
+          <a href="/interview/create_interview">Add Interview</a>
+          <a href="/interview/assign_interview">Assign Interview</a>
+          <a href="/student">Students Info</a>
+          <a href="/interview">Interview Info</a>
+          <a href="/interview/result-summary">Results</a>
+          <a href="/users/sign-out">Logout</a>
+      </nav>
+      <h4 style="text-align: center;">Add a new Student</h4>
+    <form action="/student/create" method="POST" id="student-form">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="Enter student name" />
+        <label for="college">College</label>
+        <input type="text" name="college" placeholder="Enter college name" />
+        <label for="batch">Batch</label>
+        <input type="text" name="batch" placeholder="Batch" />
+        <label for="dsa">Dsa Scores</label>
+        <input type="text" name="dsa" placeholder="dsa scores" />
+        <label for="webD">WebD Scores</label>
+        <input type="text" name="webD" placeholder="WebD scores" />
+        <label for="react">React Scores</label>
+        <input type="text" name="react" placeholder="React scores" />
+        <input type="submit" value="Add Student" />
+      </div>
+     
+    </form>
+    <% for(let i=0;i<students.length;i++){%> 
+      <div style="background-color: beige;">
+        <h1 style="text-align: center;">
+          <%= students[i].name %>
+        </h1>
+        <% for(let j=0;j<students[i].status.length;j++){%> 
+            <ul style="width:50%;position:relative">
+              <% if(students[i].status[j].result==='Pending'){%> 
+                <li style="background-color: yellow;">
+                    <h1> <%= students[i].status[j].interview.company %></h1>
+                    <h3>To be held on <%= students[i].status[j].interview.date %></h3>
+                    <form action="/student/add-status/<%=students[i].status[j]._id%>" method="POST">
+                        <select name="result" id="result" onchange="this.form.submit()">
+                            <option disabled selected value>-- select an option--</option>
+                            <option value="Not Declared">Not Declared</option>
+                            <option value="Pass">Pass</option>
+                            <option value="Fail">Fail</option>
+                        </select>
+                    </form>
+                  </li>
+                    <%}else{%>
+                      <li>
+                        <%= students[i].status[j].interview.company %>
+                        <small><%= students[i].status[j].result %></small>
+                        <%}%>
+                      </li> 
+                       
+            </ul>
+            <%}%>
+      </div>
+      
+        <%}%>
+        <%}%>
+  
+   
+     
+        <script>
+          <% if(flash.success && flash.success.length>0){%> 
+            new Noty({
+              theme:'relax',
+              text:'<%= flash.success %>',
+              type:'success',
+              layout:'topRight',
+              timeout:2000
+            }).show()
+            <%}%>
+
+          <% if(flash.error && flash.error.length>0){%> 
+            new Noty({
+              theme:'relax',
+              text:'<%= flash.error %>',
+              type:'error',
+              layout:'topRight',
+              timeout:2000
+            }).show()
+            <%}%>
+        </script>
+  </body>
+</html>

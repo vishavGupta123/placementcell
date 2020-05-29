@@ -1,0 +1,21 @@
+<html>
+  <head> </head>
+  <body>
+    <h3 style="text-align: center;">Interviews List</h3>
+    <ul style="background-color: tan; text-align: center;">
+      <% for(interview of interviews){%>
+
+      <li style="margin: 10px;">
+        <%= interview.company %>
+        <br />
+        <a
+          href="/interview/assign_interview/<%=interview._id %>"
+          style="text-decoration: none;"
+          >Assign Interview</a
+        >
+      </li>
+
+      <%}%>
+    </ul>
+  </body>
+</html>

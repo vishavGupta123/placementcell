@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <style>
+      body {
+        background-color: aliceblue;
+      }
+      #sign-in-form {
+        width: 300px;
+        background-color: violet;
+        margin: auto;
+        border: 1px solid black;
+      }
+      #sign-in-form > input {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        box-shadow: inset 1px 2px 2px black;
+        height: 30px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+  </head>
+  <body>
+    <h2 style="text-align: center;">Sign in page</h2>
+    <form action="/users/create-session" method="POST" id="sign-in-form">
+      <h3 style="text-align: center;">Sign in Form</h3>
+      <input type="text" name="username" placeholder="username" />
+      <input type="password" name="password" placeholder="password" />
+      <input type="submit" value="Log in" />
+      <a
+        href="/users/sign-up"
+        style="
+          display: block;
+          text-align: center;
+          text-decoration: none;
+          margin-top: 10px;
+        "
+        >Sign-Up</a
+      >
+    </form>
+    <script>
+      <% if(flash.success && flash.success.length>0){%>
+         new Noty({
+           theme:'relax',
+           text:'<%= flash.success %>',
+           type:'success',
+           layout:'topRight',
+           timeout:2000
+         }).show()
+         <%}%>
+
+       <% if(flash.error && flash.error.length>0){%>
+         new Noty({
+           theme:'relax',
+           text:'<%= flash.error %>',
+           type:'error',
+           layout:'topRight',
+           timeout:2000
+         }).show()
+         <%}%>
+    </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <style>
+      #assign-interview-form {
+        width: 300px;
+        height: 700px;
+        border: 1px solid black;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        background-color: beige;
+      }
+      label {
+        display: block;
+      }
+      #assign-interview-form > .formdiv {
+        margin: 30px;
+      }
+      input[type="submit"] {
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <% if(company){%>
+    <form
+      action="/interview/assign_interview/<%= company._id %>"
+      method="POST"
+      id="assign-interview-form"
+    >
+      <div class="formdiv">
+        <label for="Company">Company name:::<%=company.company%></label>
+      </div>
+      <div class="formdiv">
+        <label for="student">Student</label>
+        <input
+          type="text"
+          name="student"
+          placeholder="Student name"
+          id="student"
+        />
+      </div>
+      <div class="formdiv">
+        <label for="date">Date</label>
+        <input type="date" name="date" placeholder="Date" id="date" />
+      </div>
+
+      <input type="submit" value="Submit" />
+    </form>
+    <%}%>
+    <script>
+      <% if(flash.success && flash.success.length>0){%>
+          new Noty({
+            theme:'relax',
+            text:'<%= flash.success %>',
+            type:'success',
+            layout:'topRight',
+            timeout:2000
+          }).show()
+          <%}%>
+
+        <% if(flash.error && flash.error.length>0){%>
+          new Noty({
+            theme:'relax',
+            text:'<%= flash.error %>',
+            type:'error',
+            layout:'topRight',
+            timeout:2000
+          }).show()
+          <%}%>
+    </script>
+  </body>
+</html>

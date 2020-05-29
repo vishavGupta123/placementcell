@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <style>
+      table {
+        margin: auto;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <nav style="background-color: whitesmoke;">
+      <a href="/" style="text-decoration: none;">Home</a>
+    </nav>
+    <h1 style="text-align: center;">
+      Career Camp Students Information
+    </h1>
+    <table>
+      <th>Name</th>
+      <th>College</th>
+      <th>Batch</th>
+      <th>Dsa Scores</th>
+      <th>WebD Scores</th>
+      <th>React Scores</th>
+      <% for(student of students){%>
+      <tr>
+        <td><%= student.name %></td>
+        <td><%= student.college %></td>
+        <td><%= student.batch %></td>
+        <td><%= student.course.dsa %></td>
+        <td><%= student.course.webD %></td>
+        <td><%= student.course.react %></td>
+      </tr>
+      <%}%>
+    </table>
+  </body>
+</html>

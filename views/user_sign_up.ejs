@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+  </head>
+  <body>
+    <form action="/users/sign-up" method="POST">
+      <input type="text" name="username" placeholder="username" />
+      <input type="password" name="password" placeholder="password" />
+      <input
+        type="password"
+        name="confirmpassword"
+        placeholder="Confirm - Password"
+      />
+      <input type="submit" value="Register" />
+    </form>
+    <script>
+      <% if(flash.success && flash.success.length>0){%>
+         new Noty({
+           theme:'relax',
+           text:'<%= flash.success %>',
+           type:'success',
+           layout:'topRight',
+           timeout:2000
+         }).show()
+         <%}%>
+
+       <% if(flash.error && flash.error.length>0){%>
+         new Noty({
+           theme:'relax',
+           text:'<%= flash.error %>',
+           type:'error',
+           layout:'topRight',
+           timeout:2000
+         }).show()
+         <%}%>
+    </script>
+  </body>
+</html>
